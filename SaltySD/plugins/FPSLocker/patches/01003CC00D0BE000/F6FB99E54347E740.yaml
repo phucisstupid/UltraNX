@@ -2,59 +2,46 @@
 # BID: F6FB99E54347E740
 # Double buffer is hardcoded line by line, it's hard to make it triple
 
-unsafeCheck: true
-
+DECLARATIONS:
+  -
+    type: variable
+    name: fps_lock
+    value_type: double
+    default_value: 0.03333333333333333
+    evaluate: "1 / FPS_TARGET"
+  -
+    type: variable
+    name: dr_target
+    value_type: float
+    default_value: 33.333333
+    evaluate: FRAMETIME_TARGET
 MASTER_WRITE:
-  # Redirect FPS Lock and Dynamic Resolution target values to MAIN + 0x21036F00
   -
-    type: bytes
+    type: asm_a64
     main_offset: 0x13281C
-    value_type: uint32
-    value: 
-      - 0x90107828 # ADRP X8, 0x21036000
-      - 0xF9478108 # LDR X8, [X8, 0xF00]
+    instructions: [
+      [adrp, x8, $fps_lock],
+      [ldr, x8, [x8, $fps_lock]]
+    ]
   -
-    type: bytes
+    type: asm_a64
     main_offset: 0x3E324C
-    value_type: uint32
-    value: 
-      - 0xF0106288 # ADRP X8, 0x21036000
-      - 0xF9478108 # LDR X8, [X8, 0xF00]
-  # NOP updating Dynamic Resolution target value
+    instructions: [
+      [adrp, x8, $fps_lock],
+      [ldr, x8, [x8, $fps_lock]]
+    ]
   -
-    type: bytes
+    type: asm_a64
     main_offset: 0x2D94E8
-    value_type: uint32
-    value:
-      - 0xB0106AE9 # ADRP X9, 0x21036000
-      - 0xB94F0929 # LDR W9, [X9, 0xF08]
+    instructions: [
+      [adrp, x9, $dr_target],
+      [ldr, w9, [x9, $dr_target]]
+    ]
   -
-    type: bytes
+    type: asm_a64
     main_offset: 0x597C5C
-    value_type: uint32
-    value:
-      - 0xF01054E9 # ADRP X9, 0x21036000
-      - 0xB94F0929 # LDR W9, [X9, 0xF08]
-  # Default values
-  -
-    type: bytes
-    main_offset: 0x21036F00
-    value_type: double
-    value: 0.03333333333333333
-  -
-    type: bytes
-    main_offset: 0x21036F08
-    value_type: float
-    value: 33.333333333333
-ALL_FPS:
-  # FPS Lock
-  -
-    type: evaluate_write
-    address: [MAIN, 0x21036F00]
-    value_type: double
-    value: "1 / FPS_TARGET"
-  -
-    type: evaluate_write
-    address: [MAIN, 0x21036F08]
-    value_type: float
-    value: FRAMETIME_TARGET
+    instructions: [
+      [adrp, x9, $dr_target],
+      [ldr, w9, [x9, $dr_target]]
+    ]
+

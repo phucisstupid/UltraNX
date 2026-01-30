@@ -1,34 +1,29 @@
 # Outlast 1.0.1
 # BID: C3D46BB3C7059DB1
 
-unsafeCheck: true
-
 MASTER_WRITE:
   # Remove double buffer
   -
-    type: bytes
+    type: asm_a64
     main_offset: 0xB52C64
-    value_type: uint32
-    value: 0xF100639F
+    instructions: [
+      [cmp, x28, 0x18]
+    ]
   -
-    type: bytes
+    type: asm_a64
     main_offset: 0xB52CD0
-    value_type: uint32
-    value: 0x52800061
+    instructions: [
+      [mov, w1, 3]
+    ]
   -
-    type: bytes
+    type: asm_a64
     main_offset: 0xB529A8
-    value_type: uint32
-    value: 0xF100639F
+    instructions: [
+      [cmp, x28, 0x18]
+    ]
   -
-    type: bytes
+    type: asm_a64
     main_offset: 0xB52A14
-    value_type: uint32
-    value: 0x52800061
-ALL_FPS:
-  # DUMMY
-  -
-    type: write
-    address: [MAIN, 0x36BF100]
-    value_type: uint8
-    value: 0
+    instructions: [
+      [mov, w1, 3]
+    ]

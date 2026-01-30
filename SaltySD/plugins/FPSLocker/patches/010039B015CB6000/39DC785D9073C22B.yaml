@@ -1,48 +1,48 @@
 # Eiyuden Chronicle: Rising 1.02
 # BID: 39DC785D9073C22B
 
-unsafeCheck: true
-
+DECLARATIONS:
+  -
+    type: variable
+    name: dr_target1
+    value_type: double
+    default_value: 31
+    evaluate: "0.93 * FRAMETIME_TARGET"
+  -
+    type: variable
+    name: dr_target2
+    value_type: double
+    default_value: 29
+    evaluate: "0.87 * FRAMETIME_TARGET"
+  -
+    type: code
+    name: drMaxTarget
+    instructions: [
+      [adrp, x19, $dr_target1],
+      [ldr, d1, [x19, $dr_target1]],
+      [ret]
+    ]
+  -
+    type: code
+    name: drMinTarget
+    instructions: [
+      [adrp, x8, $dr_target2],
+      [ldr, d1, [x8, $dr_target2]],
+      [ret]
+    ]
 MASTER_WRITE:
-  # Redirect DynamicResolution$$LowerResSW Max Target in MS to MAIN+0x3BE1200
+  # Redirect DynamicResolution$$LowerResSW Max Target in MS
   -
-    type: bytes
+    type: asm_a64
     main_offset: 0x2426988
-    value_type: uint32
-    value: 
-      - 0x14000043
+    instructions: [
+      [bl, _drMaxTarget()]
+    ]
+  # Redirect DynamicResolution$$LowerResSW Min Target
   -
-    type: bytes
-    main_offset: 0x2426A94
-    value_type: uint32
-    value: 
-      - 0xF000BDD3
-      - 0xFD410261
-      - 0x17FFFFBC
-  # Redirect DynamicResolution$$LowerResSW Min Target in MS to MAIN+0x3BE1208
-  -
-    type: bytes
+    type: asm_a64
     main_offset: 0x24269F4
-    value_type: uint32
-    value: 
-      - 0x1400012C
-  -
-    type: bytes
-    main_offset: 0x2426EA4
-    value_type: uint32
-    value: 
-      - 0xF000BDC8
-      - 0xFD410501
-      - 0x17FFFED3
-  # Write default values
-  -
-    type: bytes
-    main_offset: 0x3BE1200
-    value_type: double
-    value: [31, 29]
-ALL_FPS:
-  -
-    type: evaluate_write
-    address: [MAIN, 0x3BE1200]
-    value_type: double
-    value: ["0.93 * FRAMETIME_TARGET", "0.87 * FRAMETIME_TARGET"]
+    instructions: [
+      [bl, _drMinTarget()]
+    ]
+

@@ -2,19 +2,11 @@
 # BID: 76EC789B99A25BA5
 # REF: aql::GraphicsContext::initialize
 
-unsafeCheck: true
-
 MASTER_WRITE:
   # Remove double buffer
   -
-    type: bytes
+    type: asm_a64
     main_offset: 0x55DFDC
-    value_type: uint32
-    value: 0xD2800068
-ALL_FPS:
-  # DUMMY
-  -
-    type: write
-    address: [MAIN, 0x25CCF00]
-    value_type: uint8
-    value: 0
+    instructions: [
+      [mov, x8, 3]
+    ]
