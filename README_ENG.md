@@ -116,7 +116,7 @@ Listed below are the licenses of those programs that have been modified specific
 If you like the project and you have a desire to support me with a penny - I will be very grateful.
 I have no other income at the moment, so any monetary help is very valuable to me.            
 ```
-TON:  UQA9My51bkGZHbYhbdRZfp6B60N7VJfsnKl0sakgw9YhAPct
-BTC:  18K6NN8NEavvMJL5Do3VTyJbL8NeZPHo93
-USDT TRC20: TUZ5szAmRsnvBuC4rFB8RaAoCbN6Ucy4sL
+TON:  UQC9p9jHJHLVnm4uXJDoH4GQ76golzgKnG-bEExO2QsotCV5
+BTC:  bc1q407f2fv3nsdy86y6njfx8updhxfmuwx49erhal
+USDT TRC20:  TUZ5szAmRsnvBuC4rFB8RaAoCbN6Ucy4sL
 ```
